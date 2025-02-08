@@ -1,3 +1,6 @@
 [submodule "BTrack"]
 	path = BTrack
 	url = https://github.com/ENOCKMOSETI/BTrack/
+[submodule "JUCE"]
+	path = JUCE
+	url = https://github.com/juce-framework/JUCE.git
