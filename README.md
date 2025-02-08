@@ -4,10 +4,15 @@
 
 ### Compile & run simple helloworld app
 
+To install the submodules locally:
+```
+cd Auto-Tempo-Detection
+git submodule update --init --recursive
+```
+
 To build :
 
 ```
-cd Auto-Tempo-Detection
 mkdir build
 cd build
 cmake ..
