@@ -1,0 +1,6 @@
+# ignore submodule directories
+JUCE
+BTrack
+
+build
+bin
