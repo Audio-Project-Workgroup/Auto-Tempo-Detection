@@ -1,15 +1,56 @@
-# Set the minimum version of CMake required
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.22)
 
-# Set the project name
-project(Auto-Tempo-Detection)
+set(COMPANY_NAME AudioProjectWorkgroup)
+set(PROJECT_NAME Auto-Tempo-Detection)
 
-# Specify the C++ standard
-set(CMAKE_CXX_STANDARD 11)
+project(${PROJECT_NAME})
 
-set(SOURCE_FILES
-    src/main.cpp
+set(CMAKE_CXX_STANDARD 17)
+
+set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+
+# Options to build the app and/or the vst3 are enabled by default
+option(BUILD_PLUGIN "Build the plugin" ON)
+option(BUILD_APP "Build the application" ON)
+
+include(cmake/cpm.cmake)
+
+CPMAddPackage(
+    NAME BTRACK
+    GITHUB_REPOSITORY ENOCKMOSETI/BTrack
+    SOURCE_DIR ${LIB_DIR}/btrack
+    GIT_TAG master
+)
+CPMAddPackage(
+    NAME JUCE
+    GITHUB_REPOSITORY juce-framework/JUCE
+    GIT_TAG 8.0.6
+    VERSION 8.0.6
+    SOURCE_DIR ${LIB_DIR}/juce
 )
 
-# Add the executable that will be built from the main.cpp file
-add_executable(auto-tempo-detection ${SOURCE_FILES})
+CPMAddPackage(
+    NAME GOOGLETEST
+    GITHUB_REPOSITORY google/googletest
+    VERSION 1.13.0
+    SOURCE_DIR ${LIB_DIR}/googletest
+    OPTIONS
+        "INSTALL_GTEST OFF"
+        "gtest_force_shared_crt ON"
+)
+
+enable_testing()
+
+if (MSVC)
+    add_compile_options(/Wall /WX)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+if(BUILD_APP)
+    add_subdirectory(app)
+endif()
+if(BUILD_PLUGIN)
+    add_subdirectory(plugin)
+endif()
+# add_subdirectory(test)

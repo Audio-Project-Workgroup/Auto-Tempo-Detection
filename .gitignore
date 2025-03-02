@@ -1,6 +1,4 @@
-# ignore submodule directories
-JUCE
-BTrack
-
-build
-bin
+build/
+libs/
+AudioPluginHost
+.vscode/
