@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.22)
 
-project (AutoTempoDetectionTest)
+project (AutoTempoDetectionTests)
 
 enable_testing()
 
 add_executable(${PROJECT_NAME} 
-    source/AudioProcessorTest.cpp
+    allTests.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -18,7 +18,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        ${COMPANY_NAME}_Plugin
-        # ${PROJECT_NAME}
+        atd_vst_library
         GTest::gtest_main
 )

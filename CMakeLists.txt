@@ -12,6 +12,7 @@ set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 # Options to build the app and/or the vst3 are enabled by default
 option(BUILD_PLUGIN "Build the plugin" ON)
 option(BUILD_APP "Build the application" ON)
+option(BUILD_TESTS "Build tests for the plugin and the application" ON)
 
 include(cmake/cpm.cmake)
 
@@ -53,4 +54,6 @@ endif()
 if(BUILD_PLUGIN)
     add_subdirectory(plugin)
 endif()
-# add_subdirectory(test)
+if(BUILD_TESTS)
+add_subdirectory(test)
+endif()

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project (${PROJECT_NAME}_Plugin VERSION 0.1.0)
 
 juce_add_plugin(${PROJECT_NAME}
-    COMPANY_NAME YourCompanyName
+    COMPANY_NAME ${COMPANY_NAME}
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
@@ -12,6 +12,9 @@ juce_add_plugin(${PROJECT_NAME}
     FORMATS VST3
     PRODUCT_NAME ${COMPANY_NAME}
 )
+
+add_library(atd_vst_library ALIAS ${PROJECT_NAME})
+
 
 target_sources(${PROJECT_NAME}
     PRIVATE
