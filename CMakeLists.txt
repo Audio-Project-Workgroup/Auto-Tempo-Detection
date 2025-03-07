@@ -42,7 +42,7 @@ CPMAddPackage(
 enable_testing()
 
 if (MSVC)
-    add_compile_options(/Wall /WX)
+    add_compile_options(/WX)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
