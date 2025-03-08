@@ -43,7 +43,9 @@ CPMAddPackage(
 enable_testing()
 
 if (MSVC)
-    add_compile_options(/WX)
+    # add_compile_options()
+    # /WX treats juce warnings as errors when building the tests
+    # /Wall treats juce warnings as errors when building the vst/app.
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()

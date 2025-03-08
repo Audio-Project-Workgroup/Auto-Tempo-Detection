@@ -1,0 +1,1 @@
+#include "src/mainComponentTests.cpp"
