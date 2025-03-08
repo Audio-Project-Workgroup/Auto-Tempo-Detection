@@ -9,10 +9,8 @@ Before you start, make sure you have the following installed:
 - CMake 
 - Git
 - C++ Compiler
+- (optional : additional dependencies you might need for VST3 Plugin) [VST3 SDK](https://www.steinberg.net/developers/) 
 
-Additional Dependencies for VST3 Plugin
-
-- VST3 SDK (if you plan on building the VST3 plugin)
 
 # Instructions
 
@@ -56,4 +54,4 @@ Once the build is complete, you will find the :
 #### Run the tests
 Find the test executable within build directory.
 - To apply the tests for `Auto-Tempo-Detection`, run the `AutoTempoDetectionTests` somewhere within `build/test/` (i.e. `build\test\Debug\AutoTempoDetectionTests.exe` for Windows)
-- To apply the tests for `BTrack`, run the binary somewhere within `build/libs/BTrack/tests/`.
+- To apply the tests for `BTrack`, run the binary from somewhere within `build/libs/BTrack/tests/`.
