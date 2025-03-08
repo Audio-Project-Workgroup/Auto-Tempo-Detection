@@ -21,8 +21,18 @@ To use this project, follow these steps:
 #### Clone the repository
 ```
 git clone https://github.com/Audio-Project-Workgroup/Auto-Tempo-Detection.git
-cd Auto-Tempo-Detection
 ```
+
+#### Download submodules
+```
+cd Auto-Tempo-Detection
+git submodule init
+git submodule update --recursive
+```
+#### Install dependencies 
+
+- BTrack
+BTrack is located in the `libs` directory. Follow the [instructions](https://github.com/ENOCKMOSETI/BTrack#requirements) to install BTrack's dependencies.
 
 #### Build the Project
 ```
@@ -42,17 +52,6 @@ Once the build is complete, you will find the :
 *As for the Standalone Application, you can run the standalone application directly from the terminal.*
 
 #### Run the tests
-
-For Linux:
-```
-./build/test/AutoTempoDetectionTest
-```
-
-For Windows:
-```
-...
-```
-For macOS:
-```
-...
-```
+Find the test executable within build directory.
+- To apply the tests for `Auto-Tempo-Detection`, run the `AutoTempoDetectionTests` somewhere within `build/test/` (i.e. `build\test\Debug\AutoTempoDetectionTests.exe` for Windows)
+- To apply the tests for `BTrack`, run the binary somewhere within `build/libs/BTrack/tests/`.

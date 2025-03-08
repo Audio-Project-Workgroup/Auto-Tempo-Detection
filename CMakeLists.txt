@@ -17,12 +17,6 @@ option(BUILD_TESTS "Build tests for the plugin and the application" ON)
 include(cmake/cpm.cmake)
 
 CPMAddPackage(
-    NAME BTRACK
-    GITHUB_REPOSITORY ENOCKMOSETI/BTrack
-    SOURCE_DIR ${LIB_DIR}/btrack
-    GIT_TAG master
-)
-CPMAddPackage(
     NAME JUCE
     GITHUB_REPOSITORY juce-framework/JUCE
     GIT_TAG 8.0.6
@@ -57,5 +51,7 @@ if(BUILD_PLUGIN)
     add_subdirectory(plugin)
 endif()
 if(BUILD_TESTS)
-add_subdirectory(test)
+    add_subdirectory(test)
 endif()
+
+add_subdirectory(${LIB_DIR}/BTrack)
