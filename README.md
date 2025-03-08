@@ -29,6 +29,8 @@ cd Auto-Tempo-Detection
 git submodule init
 git submodule update --recursive
 ```
+*in case the above commands have no effect, consider downloading manually the repositories into the `libs` directory.*
+ 
 #### Install dependencies 
 
 - BTrack
