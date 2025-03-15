@@ -15,11 +15,14 @@ juce_add_plugin(${PROJECT_NAME}
 
 add_library(atd_vst_library ALIAS ${PROJECT_NAME})
 
+juce_generate_juce_header(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
     PRIVATE
         source/PluginEditor.cpp
         source/PluginProcessor.cpp
+        source/Display.cpp 
+        source/CustomLookAndFeel.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
