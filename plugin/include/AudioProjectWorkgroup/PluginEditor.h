@@ -2,6 +2,7 @@
 
 #include "PluginProcessor.h"
 #include "Display.h"
+#include "CustomButton.h"
 #include "CustomLookAndFeel.h"
 
 //==============================================================================
@@ -23,6 +24,7 @@ private:
     AudioPluginAudioProcessor& processorRef;
     CustomLookAndFeel customLNF;
     Display display;
+    CustomButton resetBtn;
     void timerCallback() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)

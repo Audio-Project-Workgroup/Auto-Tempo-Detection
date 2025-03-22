@@ -23,6 +23,7 @@ target_sources(${PROJECT_NAME}
         source/PluginProcessor.cpp
         source/Display.cpp 
         source/CustomLookAndFeel.cpp
+        source/CustomButton.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
