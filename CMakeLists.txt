@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 set(COMPANY_NAME AudioProjectWorkgroup)
 set(PROJECT_NAME Auto-Tempo-Detection)
 
-project(${PROJECT_NAME})
+project(${PROJECT_NAME} VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -13,6 +13,7 @@ set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 option(BUILD_PLUGIN "Build the plugin" ON)
 option(BUILD_APP "Build the application" ON)
 option(BUILD_TESTS "Build tests for the plugin and the application" ON)
+option(BUILD_PLUGIN_HOST "Build Juce's AudioPluginHost application to host the vst3 plugin. It is built only if BUILD_PLUGIN enabled" ON)
 
 include(cmake/cpm.cmake)
 
@@ -49,6 +50,9 @@ if(BUILD_APP)
 endif()
 if(BUILD_PLUGIN)
     add_subdirectory(plugin)
+    if (BUILD_PLUGIN_HOST)
+        add_subdirectory(${LIB_DIR}/juce/extras/AudioPluginHost)
+    endif()
 endif()
 if(BUILD_TESTS)
     add_subdirectory(test)
