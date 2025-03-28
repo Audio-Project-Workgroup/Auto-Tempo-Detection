@@ -24,16 +24,25 @@ target_sources(${PROJECT_NAME}
         source/Display.cpp 
         source/CustomLookAndFeel.cpp
         source/CustomButton.cpp
-)
+        source/tempo/beatrack.cpp
+        source/tempo/interface.cpp
+        ${LIB_DIR}/BTrack/src/BTrack.cpp
+        ${LIB_DIR}/BTrack/src/OnsetDetectionFunction.cpp
+        ${LIB_DIR}/BTrack/libs/kiss_fft130/kiss_fft.c
+)   
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE
-        include
+        include   
+        ${LIB_DIR}/BTrack/src/
+        ${LIB_DIR}/BTrack/libs/kiss_fft130/
+        ${LIB_DIR}/BTrack/libs/libsamplerate-0.2.2-win64/include/
 )
 
 target_link_libraries( ${PROJECT_NAME}
     PRIVATE
         juce::juce_audio_utils
+        BTrack
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags

@@ -51,7 +51,7 @@ void AudioPluginAudioProcessorEditor::resized()
 void AudioPluginAudioProcessorEditor::timerCallback()
 {
     // Get the current tempo
-    int tempo = processorRef.currTempo;
+    int tempo = processorRef.currTempo.load();
 
     // Store the current tempo in a string
     display.tempo = juce::String::formatted("%d", tempo);

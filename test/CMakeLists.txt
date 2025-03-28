@@ -20,6 +20,10 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/../plugin/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../app/include
         ${JUCE_SOURCE_DIR}/modules
+
+        ${LIB_DIR}/BTrack/src/
+        ${LIB_DIR}/BTrack/libs/kiss_fft130/
+        ${LIB_DIR}/BTrack/libs/libsamplerate-0.2.2-win64/include/
 )
 
 if(${BUILD_APP})
