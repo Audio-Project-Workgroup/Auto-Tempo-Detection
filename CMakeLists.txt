@@ -17,23 +17,34 @@ option(BUILD_PLUGIN_HOST "Build Juce's AudioPluginHost application to host the v
 
 include(cmake/cpm.cmake)
 
-CPMAddPackage(
-    NAME JUCE
-    GITHUB_REPOSITORY juce-framework/JUCE
-    GIT_TAG 8.0.6
-    VERSION 8.0.6
-    SOURCE_DIR ${LIB_DIR}/juce
-)
-
-CPMAddPackage(
-    NAME GOOGLETEST
-    GITHUB_REPOSITORY google/googletest
-    VERSION 1.13.0
-    SOURCE_DIR ${LIB_DIR}/googletest
-    OPTIONS
-        "INSTALL_GTEST OFF"
-        "gtest_force_shared_crt ON"
-)
+set(JUCE_DIR "${LIB_DIR}/juce")
+set(GTEST_DIR "${LIB_DIR}/googletest")
+if(NOT EXISTS ${JUCE_DIR}/CMakeLists.txt)
+    CPMAddPackage(
+        NAME JUCE
+        GITHUB_REPOSITORY juce-framework/JUCE
+        GIT_TAG 8.0.6
+        VERSION 8.0.6
+        SOURCE_DIR ${LIB_DIR}/juce
+    )
+else()
+    add_subdirectory(${JUCE_DIR})
+    message(STATUS "JUCE found locally at ${JUCE_DIR}, skipping download")
+endif()
+if(NOT EXISTS ${GTEST_DIR}/CMakeLists.txt)
+    CPMAddPackage(
+        NAME GOOGLETEST
+        GITHUB_REPOSITORY google/googletest
+        VERSION 1.13.0
+        SOURCE_DIR ${LIB_DIR}/googletest
+        OPTIONS
+            "INSTALL_GTEST OFF"
+            "gtest_force_shared_crt ON"
+    )
+else()
+    add_subdirectory(${GTEST_DIR})
+    message(STATUS "GTEST found locally at ${GTEST_DIR}, skipping download")
+endif()
 
 enable_testing()
 
