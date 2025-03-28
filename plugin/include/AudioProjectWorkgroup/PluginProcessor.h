@@ -1,6 +1,7 @@
 #pragma once
 
 #include <juce_audio_processors/juce_audio_processors.h>
+#include "AudioProjectWorkgroup/tempo/interface.h"
 
 //==============================================================================
 class AudioPluginAudioProcessor  : public juce::AudioProcessor
@@ -47,5 +48,9 @@ public:
 
 private:
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor);
+
+    Interface interface;
+    Tracker& tracker;
+    float *currBuffer[2];
 };

@@ -10,8 +10,9 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), currTempo{ 120 }
+                       ), currTempo{ 120 }, tracker{interface.getTracker()}
 {
+    
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
@@ -88,7 +89,9 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    juce::ignoreUnused (sampleRate, samplesPerBlock);
+    // juce::ignoreUnused (sampleRate, samplesPerBlock);
+    tracker.setup(sampleRate,samplesPerBlock);
+    printf("All set up -------------------------------------------------------@!#$#%@#$");
 }
 
 void AudioPluginAudioProcessor::releaseResources()
@@ -151,6 +154,13 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         juce::ignoreUnused (channelData);
         // ..do something to the data...
     }
+
+    currBuffer[0] = (float *)buffer.getReadPointer(0);
+    if (totalNumInputChannels == 2)
+        currBuffer[1] = (float *)buffer.getReadPointer(1);
+    tracker.operate( currBuffer, totalNumInputChannels);
+
+    currTempo.store(tracker.get_tempo());
 }
 
 //==============================================================================
