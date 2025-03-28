@@ -6,7 +6,7 @@
 */
 
 #include <JuceHeader.h>
-#include "AudioProjectWorkGroup/CustomButton.h"
+#include "AudioProjectWorkgroup/CustomButton.h"
 
 //==============================================================================
 CustomButton::CustomButton()
