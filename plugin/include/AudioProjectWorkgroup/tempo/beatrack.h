@@ -2,6 +2,7 @@
 
 #include "tracker.h"
 #include "BTrack.h"
+#include <vector>
 
 class BeaTrack final: public Tracker{
 
@@ -18,5 +19,5 @@ public:
 
 private:
 	BTrack BeaTracker;
-	double tempHelper[1000];
+	std::vector<double> helperBuffer;
 };
