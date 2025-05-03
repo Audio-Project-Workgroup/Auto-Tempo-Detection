@@ -18,6 +18,7 @@ void BeaTrack::setup(double sampleRate, int samplesPerBlock) {
 	
 	SR = sampleRate; 
 	bufferSize = samplesPerBlock;
+	BeaTracker.setSampleRate(SR);
 	BeaTracker.updateHopAndFrameSize(bufferSize,bufferSize);
 }
 
@@ -44,6 +45,7 @@ bool BeaTrack::operate(float** data, int inputChannels){
 
 	// if(isBeat)
 	// 	printf("Tick\n");
+	
 
 	return isBeat;
 }
