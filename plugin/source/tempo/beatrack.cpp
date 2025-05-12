@@ -4,9 +4,8 @@
 #include "AudioProjectWorkgroup/tempo/beatrack.h"
 
 BeaTrack::BeaTrack(){
-	SR = 44100; 
-	bufferSize = 512;
-	BeaTracker.updateHopAndFrameSize(bufferSize,bufferSize);
+	SR = 0; 
+	bufferSize = 0;
 }
 
 BeaTrack::~BeaTrack() = default;
@@ -19,38 +18,27 @@ void BeaTrack::setup(double sampleRate, int samplesPerBlock) {
 	SR = sampleRate; 
 	bufferSize = samplesPerBlock;
 	BeaTracker.setSampleRate(SR);
+	helperBuffer.resize(bufferSize);
 	BeaTracker.updateHopAndFrameSize(bufferSize,bufferSize);
 }
 
 bool BeaTrack::operate(float** data, int inputChannels){
+	
 	// transform data to double
 	// transform data to mono
-	
-	for (int i=0; i<inputChannels; ++i){
-		for (int j = 0; j< bufferSize; ++j){
-			
-			double val = static_cast<double>(data[i][j]);
+	for (int j = 0; j< bufferSize; ++j){
 
-			if (i==0)	
-				tempHelper[j] = val;
-			else{
-				tempHelper[j] += val;
-				tempHelper[j] /= 2.f;
-			}
+		helperBuffer[j] = static_cast<double>(data[0][j]);
+
+		for (int i=1; i<inputChannels; ++i){
+			helperBuffer[j] += static_cast<double>(data[i][j]);
 		}
+		helperBuffer[j] /= static_cast<double>(inputChannels);
 	}
-
-	BeaTracker.processAudioFrame(tempHelper);
-	bool isBeat = BeaTracker.beatDueInCurrentFrame();
-
-	// if(isBeat)
-	// 	printf("Tick\n");
-	
-
-	return isBeat;
+	BeaTracker.processAudioFrame(helperBuffer.data());
+	return BeaTracker.beatDueInCurrentFrame();
 }
 
 double BeaTrack::get_tempo(){
 	return BeaTracker.getCurrentTempoEstimate();
 }
-
