@@ -1,5 +1,7 @@
 #include "AudioProjectWorkgroup/MainComponent.h"
 
+#include "BTrack.h" // include it only for proving proper integration
+
 //==============================================================================
 class GuiAppApplication final : public juce::JUCEApplication
 {
