@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - ext-dev
-      # - main
+      - main
 
 jobs:
   build:
@@ -19,10 +19,10 @@ jobs:
 
       - name: Initialize submodules
         run: |
-          git submodule init
-          git submodule update
+          git submodule update --init --recursive
           cd libs/BTrack
           git checkout bugFix
+          git submodule update --init --recursive
           cd ../..
 
       - name: Install dependencies (Linux)
@@ -44,28 +44,12 @@ jobs:
           libwebkit2gtk-4.1-dev \
           libglu1-mesa-dev mesa-common-dev
           
-          # Install BTrack dependencies
-          sudo apt-get install -y libsamplerate0 libsamplerate-dev
-          
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |            
           brew update
           brew install cmake git 
-          brew install libsamplerate
       
-      - name: Download libsamplerate for Windows
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          mkdir libs\BTrack\libs
-          cd libs\BTrack\libs
-          curl -L -o libsamplerate.zip https://github.com/libsndfile/libsamplerate/releases/download/0.2.2/libsamplerate-0.2.2-win64.zip
-          powershell -Command "Expand-Archive -Path libsamplerate.zip -DestinationPath ."
-          dir
-          dir libsamplerate-0.2.2-win64
-          dir libsamplerate-0.2.2-win64\bin
-
       - name: Build project (Unix)
         if: runner.os != 'Windows'
         run: |
@@ -110,19 +94,6 @@ jobs:
           key: ${{ runner.os }}-build-${{ github.sha }}
           fail-on-cache-miss: true
       
-      # Install runtime dependencies only
-      - name: Install runtime dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt update
-          sudo apt-get install -y libsamplerate0
-
-      - name: Install runtime dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew update
-          brew install libsamplerate
-
       - name: Apply Auto-Tempo-Detection tests (Unix)
         if: runner.os != 'Windows'
         run: ${PWD}/build/test/AutoTempoDetectionTests
