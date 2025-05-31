@@ -2,6 +2,12 @@
 
 Welcome to the Auto-Tempo-Detection project! This repository supports both a standalone application and VST3 plugin for automatic tempo detection in audio. 🎧
 
+
+[![Version](https://img.shields.io/badge/version-0.0.1-blue)](https://github.com/Audio-Project-Workgroup/Auto-Tempo-Detection)
+[![License](https://img.shields.io/badge/license-MIT-yellow)](https://github.com/Audio-Project-Workgroup/Auto-Tempo-Detection)
+[![Year](https://img.shields.io/badge/year-2025-brightgreen)](https://github.com/Audio-Project-Workgroup/Auto-Tempo-Detection)
+[![CI](https://github.com/Audio-Project-Workgroup/Auto-Tempo-Detection/actions/workflows/ci.yml/badge.svg)](https://github.com/Audio-Project-Workgroup/Auto-Tempo-Detection/actions/workflows/ci.yml)
+
 # Dependencies
 
 Before you start, make sure you have the following installed:
