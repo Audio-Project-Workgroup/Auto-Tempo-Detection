@@ -13,13 +13,22 @@ CustomButton::CustomButton()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
+    resetFlag = false;
+    reset.setLookAndFeel(&laf);
     addAndMakeVisible(&reset);
     addAndMakeVisible(&resetLabel);
 
     // Init button settings
-    reset.setColour(juce::TextButton::buttonColourId, juce::Colour(74, 76, 84));
-    reset.setColour(juce::ComboBox::outlineColourId, juce::Colour(74, 76, 84));
+    reset.setColour(juce::TextButton::buttonColourId, juce::Colour(252, 116, 32));
+    reset.setColour(juce::TextButton::buttonOnColourId, juce::Colour(252, 116, 32));
+    reset.setColour(juce::ComboBox::outlineColourId, juce::Colour(46, 45, 51));
     reset.setButtonText("");
+
+    // Reset plugin state when button is clicked
+    reset.onClick = [this]
+    {
+      resetState();
+    };
 
     // Init label button settings
     resetLabel.setFont(juce::Font(14.0f));
@@ -55,4 +64,8 @@ void CustomButton::resized()
     auto resetBounds = reset.getBounds();
     resetLabel.setBounds(bounds.getX(), resetBounds.getBottom() + 5,
         bounds.getWidth(), bounds.getHeight() * 0.4);
+}
+
+void CustomButton::resetState(){
+  resetFlag =  !resetFlag;
 }

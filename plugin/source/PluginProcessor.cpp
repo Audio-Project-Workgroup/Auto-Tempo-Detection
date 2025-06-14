@@ -90,7 +90,7 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
     // juce::ignoreUnused (sampleRate, samplesPerBlock);
-    tracker.setup(sampleRate,samplesPerBlock);
+    tracker.setup(sampleRate, samplesPerBlock);
     printf("All set up -------------------------------------------------------@!#$#%@#$");
 }
 

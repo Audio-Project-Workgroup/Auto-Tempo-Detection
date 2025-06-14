@@ -11,5 +11,5 @@
 CustomLookAndFeel::CustomLookAndFeel()
 {
     //setColour(juce::ResizableWindow::backgroundColourId, juce::Colour(255, 253, 208));
-    setColour(juce::ResizableWindow::backgroundColourId, juce::Colour(46, 45, 51));
+    setColour(juce::ResizableWindow::backgroundColourId, juce::Colour(0, 45, 51));
 }

@@ -21,11 +21,12 @@ target_sources(${PROJECT_NAME}
     PRIVATE
         source/PluginEditor.cpp
         source/PluginProcessor.cpp
-        source/Display.cpp 
+        source/Display.cpp
         source/CustomLookAndFeel.cpp
         source/CustomButton.cpp
         source/tempo/beatrack.cpp
         source/tempo/interface.cpp
+        source/ButtonLookAndFeel.cpp
 )   
 
 target_include_directories(${PROJECT_NAME}

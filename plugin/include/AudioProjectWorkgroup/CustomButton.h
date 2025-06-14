@@ -2,12 +2,14 @@
   ==============================================================================
 
     CustomButton.h
+    
   ==============================================================================
 */
 
 #pragma once
 
 #include <JuceHeader.h>
+#include "ButtonLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -22,6 +24,9 @@ public:
     void resized() override;
     juce::TextButton reset;
     juce::Label resetLabel;
+    ButtonLookAndFeel laf;
+    void resetState();
+    bool resetFlag;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CustomButton)

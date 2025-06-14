@@ -50,10 +50,27 @@ void AudioPluginAudioProcessorEditor::resized()
 
 void AudioPluginAudioProcessorEditor::timerCallback()
 {
-    // Get the current tempo
-    int tempo = processorRef.currTempo.load();
+    if (resetBtn.resetFlag){
+        // Set the tempo on the screen to zero first
+        int tempo = 0;
 
-    // Store the current tempo in a string
-    display.tempo = juce::String::formatted("%d", tempo);
-    display.repaint();
+        // Store the current tempo in a string
+        display.tempo = juce::String::formatted("%d", tempo);
+        display.repaint();
+
+        // Setup tracker
+        double currentSampleRate = processorRef.getSampleRate();
+        int currentSamplesPerBlock = processorRef.getBlockSize();
+
+        // after doing this, change resetBtn back to false
+        processorRef.tracker.setup(currentSampleRate, currentSamplesPerBlock);
+        resetBtn.resetFlag = false;
+    }else{
+        // Get the current tempo
+        int tempo = processorRef.currTempo.load();
+
+        // Store the current tempo in a string
+        display.tempo = juce::String::formatted("%d", tempo);
+        display.repaint();
+    }
 }
