@@ -3,9 +3,8 @@ run-name: "🚀 Continuous Integration | Install | Build | Tests | Commit: ${{ g
 on:
   push:
     branches:
-      - ext-dev
       - main
-
+      
 jobs:
   build:
     strategy:
@@ -21,7 +20,6 @@ jobs:
         run: |
           git submodule update --init --recursive
           cd libs/BTrack
-          git checkout bugFix
           git submodule update --init --recursive
           cd ../..
 
