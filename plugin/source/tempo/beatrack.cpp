@@ -3,9 +3,10 @@
 
 #include "AudioProjectWorkgroup/tempo/beatrack.h"
 
-BeaTrack::BeaTrack(){
+BeaTrack::BeaTrack() : rollingAvg(MAX_RECENT_TEMPOS){
 	SR = 0; 
 	bufferSize = 0;
+	
 }
 
 BeaTrack::~BeaTrack() = default;
@@ -36,9 +37,66 @@ bool BeaTrack::operate(float** data, int inputChannels){
 		helperBuffer[j] /= static_cast<double>(inputChannels);
 	}
 	BeaTracker.processAudioFrame(helperBuffer.data());
-	return BeaTracker.beatDueInCurrentFrame();
+	
+	return getAccurateCurrentTempoEstimate();
 }
 
 double BeaTrack::get_tempo(){
-	return BeaTracker.getCurrentTempoEstimate();
+	// return BeaTracker.getCurrentTempoEstimate();
+	return calculatedTempo;
+}
+
+bool BeaTrack::getAccurateCurrentTempoEstimate(){
+	if (BeaTracker.beatDueInCurrentFrame()){
+
+		auto currenTime = std::chrono::steady_clock::now();
+		
+		{
+			auto interval = currenTime - lastBeaTime;
+			auto intervalMs = std::chrono::duration_cast<std::chrono::milliseconds>(interval).count();
+			// raw bpm calculation : 60000 (ms) /  interval(ms)
+			calculatedTempo = 60000.0 / intervalMs;
+			findClosestTempo(calculatedTempo);	
+
+			calculatedTempo = rollingAvgSmoothing(calculatedTempo);
+		}
+		lastBeaTime = currenTime;
+
+		return true;
+	}
+
+	return false;
+}
+
+// Find closest multiple/subdivision (half, same, double, and x4). 
+void BeaTrack::findClosestTempo(double &bpm) {
+	
+	double reference = BeaTracker.getCurrentTempoEstimate();
+	double bestTempo = bpm;
+	double minDifference = std::abs(bpm - reference);
+	
+	for (double candidate : candidates) {
+		candidate*=bpm;
+		double difference = std::abs(candidate - reference);
+		if (difference < minDifference) {
+			minDifference = difference;
+			bestTempo = candidate;
+		}
+	}
+	bpm = bestTempo;
+}
+
+
+double BeaTrack::rollingAvgSmoothing(double recentTempo ) {
+	rollingAvg.push_back(recentTempo);
+	if (rollingAvg.size() > MAX_RECENT_TEMPOS) {
+		rollingAvg.erase(rollingAvg.begin());
+	}
+	
+	// Calculate average
+	double sum = 0;
+	for (double tempo : rollingAvg) {
+		sum += tempo;
+	}
+	return (sum / rollingAvg.size());
 }
