@@ -1,3 +1,6 @@
 [submodule "libs/BTrack"]
 	path = libs/BTrack
 	url = https://github.com/ENOCKMOSETI/BTrack.git
+[submodule "libs/BeatNet"]
+	path = libs/BeatNet
+	url = https://github.com/pasquale90/BeatNet.git
