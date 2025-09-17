@@ -23,8 +23,8 @@ if(NOT EXISTS ${JUCE_DIR}/CMakeLists.txt)
     CPMAddPackage(
         NAME JUCE
         GITHUB_REPOSITORY juce-framework/JUCE
-        GIT_TAG 8.0.6
-        VERSION 8.0.6
+        GIT_TAG 8.0.9
+        VERSION 8.0.9
         SOURCE_DIR ${LIB_DIR}/juce
     )
 else()
