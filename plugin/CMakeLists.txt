@@ -25,6 +25,7 @@ target_sources(${PROJECT_NAME}
         source/CustomLookAndFeel.cpp
         source/CustomButton.cpp
         source/tempo/beatrack.cpp
+        source/tempo/beatNeTracker.cpp
         source/tempo/interface.cpp
         source/ButtonLookAndFeel.cpp
 )   
@@ -38,6 +39,7 @@ target_link_libraries( ${PROJECT_NAME}
     PRIVATE
         juce::juce_audio_utils
         BTrack
+        beatnet
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags

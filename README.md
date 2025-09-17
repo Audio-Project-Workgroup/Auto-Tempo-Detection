@@ -40,6 +40,9 @@ git submodule update --recursive
 - BTrack
 BTrack is located in the `libs` directory. Follow the [instructions](https://github.com/ENOCKMOSETI/BTrack#requirements) to install BTrack's dependencies.
 
+- BeatNet
+BeatNet is located in the `libs` directory. Follow the [instructions](https://github.com/pasquale90/BeatNet/blob/main/onnx/README.md#requirements) to install BeatNet's dependencies. **Important**: *After building the plugin, all DLL files and model weights must be manually copied to the application host's installation directory. This is a temporary manual fix due to the current state of development.*
+
 #### Set the flags for conditional compiling
 
 The flags currently supported are the following:

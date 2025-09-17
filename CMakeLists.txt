@@ -56,6 +56,12 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+set(ENABLE_KISSFFT OFF CACHE BOOL "Use KissFFT as an fft backend for building BeatNet")
+set(ENABLE_FFTW3 ON CACHE BOOL "Use FFTW3 as an fft backend for building BeatNet")
+# set(BUILD_BEATNET_APP ON CACHE BOOL "Build test application for BeatNet")
+add_subdirectory(${LIB_DIR}/BeatNet/onnx)
+add_subdirectory(${LIB_DIR}/BTrack)
+
 if(BUILD_APP)
     add_subdirectory(app)
 endif()
@@ -68,5 +74,3 @@ endif()
 if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
-
-add_subdirectory(${LIB_DIR}/BTrack)
