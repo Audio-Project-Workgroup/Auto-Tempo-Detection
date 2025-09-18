@@ -10,7 +10,8 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), currTempo{ 120 }, tracker{interface.getTracker()}
+                       ), currTempo{ 120 }
+                       , tracker{TrackerList(BTRACK)} // beatnet is the default param but we excplicitly initialize with btrack..
 {
     
 }

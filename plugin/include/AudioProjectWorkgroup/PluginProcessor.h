@@ -45,8 +45,7 @@ public:
     
     // Add variable to store current BPM information (to be accessed from UI and Audio Thread)
     std::atomic<double> currTempo;
-    Interface interface;
-    Tracker& tracker;
+    Interface tracker;
     
 
 private:

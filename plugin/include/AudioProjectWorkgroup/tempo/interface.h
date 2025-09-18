@@ -1,7 +1,9 @@
 
 #pragma once
 
-#include "tracker.h"
+#include "AudioProjectWorkgroup/tempo/beatrack.h"
+#include "AudioProjectWorkgroup/tempo/beatneTracker.h"
+
 
 enum TrackerList{
 	BTRACK,
@@ -9,22 +11,30 @@ enum TrackerList{
 	NUM_TRACKERS
 };
 
-class Interface{
+class Interface final: public Tracker{
 public:
 
 	Interface(TrackerList tracker=BEATNET); // now default is the BeatNet
-	~Interface();
+	~Interface() override;
 	// delete copy and move to comply with the rule of 5
 	Interface(const Interface&) = delete;
 	Interface(Interface&&) = delete;
 	Interface& operator=(const Interface&) = delete;
 	Interface& operator=(Interface &&) = delete;
 
-	Tracker& getTracker();
-	void setTracker(TrackerList);
+	void setup(double sampleRate, int samplesPerBlock) override; // function to run in the prepareToPlay
+	bool operate(float** data, int inputChannels) override;	// function to run in the processBlock
+	double get_tempo() override;
+
+	void switchTracker(TrackerList);
 
 private:
 
-	Tracker* tempoTracker;
-	
+	Tracker *tempoTracker;
+	TrackerList selectedTracker;
+	void assignTracker();
+
+	// available Trackers 
+	BeaTrack mbeatrack;
+	BeatneTracker mbeatnet;
 };
