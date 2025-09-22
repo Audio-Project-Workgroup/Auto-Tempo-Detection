@@ -17,6 +17,17 @@ add_library(atd_vst_library ALIAS ${PROJECT_NAME})
 
 juce_generate_juce_header(${PROJECT_NAME})
 
+target_link_libraries( ${PROJECT_NAME}
+    PRIVATE
+        juce::juce_audio_utils
+        BTrack
+        beatnetlib
+    PUBLIC
+        juce::juce_recommended_config_flags
+        juce::juce_recommended_lto_flags
+        juce::juce_recommended_warning_flags
+)
+
 target_sources(${PROJECT_NAME}
     PRIVATE
         source/PluginEditor.cpp
@@ -33,17 +44,6 @@ target_sources(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         include
-)
-
-target_link_libraries( ${PROJECT_NAME}
-    PRIVATE
-        juce::juce_audio_utils
-        BTrack
-        beatnet
-    PUBLIC
-        juce::juce_recommended_config_flags
-        juce::juce_recommended_lto_flags
-        juce::juce_recommended_warning_flags
 )
 
 target_compile_definitions(${PROJECT_NAME}
