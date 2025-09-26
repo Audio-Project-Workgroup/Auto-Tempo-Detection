@@ -2,8 +2,7 @@
 #include "AudioProjectWorkgroup/tempo/beatNeTracker.h"
 
 BeatneTracker::BeatneTracker()
-	: myBeatNet(modelPath)
-	, tempoEstimate(0.0f)
+	: tempoEstimate(0.0f)
 	, predictions(preOutShape) {}
 
 BeatneTracker::~BeatneTracker() = default;

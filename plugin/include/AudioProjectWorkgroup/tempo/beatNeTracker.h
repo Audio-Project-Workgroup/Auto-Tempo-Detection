@@ -19,7 +19,6 @@ public:
 
 private:
 
-	const std::string modelPath{ "beatnet_bda.onnx" }; // TODO fix hardcoded path.
 	const int preOutShape {3};
 	BeatNet myBeatNet;
 
