@@ -2,7 +2,7 @@
 #pragma once
 
 #include "AudioProjectWorkgroup/tempo/beatrack.h"
-#include "AudioProjectWorkgroup/tempo/beatneTracker.h"
+#include "AudioProjectWorkgroup/tempo/beatNeTracker.h"
 
 
 enum TrackerList{
