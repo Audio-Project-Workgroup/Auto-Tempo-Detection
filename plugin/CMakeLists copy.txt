@@ -84,7 +84,7 @@ function(copy_vst3_dependencies target_name)
         
         set(LIBS_AND_WEIGHTS
             "${ORT_DIR}/lib/onnxruntime${LIB_EXTENSION}"
-            "${SAMPLERATE_DIR}/bin/samplerate${LIB_EXTENSION}"
+            "${LIBSAMPLERATE_DIR}/bin/samplerate${LIB_EXTENSION}"
         )
         if(ENABLE_FFTW3)
             list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/libfftw3f-3${LIB_EXTENSION}")
@@ -99,7 +99,7 @@ function(copy_vst3_dependencies target_name)
         
         set(LIBS_AND_WEIGHTS
             "${ORT_DIR}/lib/${LIB_PREFIX}onnxruntime${LIB_EXTENSION}"
-            "${SAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
+            "${LIBSAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
         )
         if(ENABLE_FFTW3)
             list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/lib/${LIB_PREFIX}fftw3f${LIB_EXTENSION}")
@@ -111,20 +111,13 @@ function(copy_vst3_dependencies target_name)
         set(VST3_CONTENTS_DIR "Contents/${ARCH}-linux")
         set(LIB_EXTENSION ".so")
         set(LIB_PREFIX "lib")
- 
-        file(GLOB SAMPLERATE_DLIBS 
-            "${SAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}*"
-            "${SAMPLERATE_DIR}/lib64/libsamplerate${LIB_EXTENSION}*")
-        list(APPEND LIBS_AND_WEIGHTS ${SAMPLERATE_LIBS})
+        
         set(LIBS_AND_WEIGHTS
             "${ORT_DIR}/lib/${LIB_PREFIX}onnxruntime${LIB_EXTENSION}"
-            ${SAMPLERATE_DLIBS}
+            "${LIBSAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
         )
         if(ENABLE_FFTW3)
-            file(GLOB FFTW3_DLIBS 
-                "${FFTW3_DIR}/lib/${LIB_PREFIX}fftw3f${LIB_EXTENSION}*"
-                "${FFTW3_DIR}/lib64/${LIB_PREFIX}fftw3f${LIB_EXTENSION}*")
-            list(APPEND LIBS_AND_WEIGHTS ${FFTW3_DLIBS})
+            list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/lib/${LIB_PREFIX}fftw3f${LIB_EXTENSION}")
         endif()
     endif()
     
@@ -136,20 +129,11 @@ function(copy_vst3_dependencies target_name)
     if(LIBS_AND_WEIGHTS)
         add_custom_command(TARGET ${target_name} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E make_directory "${VST3_TARGET_DIR}"
-            COMMENT "Precreating the installation dir of the VST3"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${LIBS_AND_WEIGHTS}
+                "${VST3_TARGET_DIR}"
+            COMMENT "Copying VST3 dependencies for ${CMAKE_SYSTEM_NAME} to ${VST3_CONTENTS_DIR}"
         )
-        foreach(DEP_FILE IN LISTS LIBS_AND_WEIGHTS)
-            if (EXISTS "${DEP_FILE}")
-                add_custom_command(TARGET ${target_name} POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                        ${DEP_FILE}
-                        "${VST3_TARGET_DIR}"
-                    COMMENT "Copying ${DEP_FILE} VST3 dependency for ${CMAKE_SYSTEM_NAME} to ${VST3_CONTENTS_DIR}"
-                )
-            else()
-                message("Unable to copy ${DEP_FILE} into ${VST3_CONTENTS_DIR}. Please copy it manually to ensure the runtime dependencies are available.")
-            endif()
-        endforeach()
     endif()
 endfunction()
 
