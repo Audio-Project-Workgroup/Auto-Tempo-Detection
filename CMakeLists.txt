@@ -7,6 +7,8 @@ project(${PROJECT_NAME} VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 
 # Options to build the app and/or the vst3 are enabled by default

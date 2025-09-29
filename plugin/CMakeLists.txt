@@ -84,7 +84,7 @@ function(copy_vst3_dependencies target_name)
         
         set(LIBS_AND_WEIGHTS
             "${ORT_DIR}/lib/onnxruntime${LIB_EXTENSION}"
-            "${LIBSAMPLERATE_DIR}/bin/samplerate${LIB_EXTENSION}"
+            "${SAMPLERATE_DIR}/bin/samplerate${LIB_EXTENSION}"
         )
         if(ENABLE_FFTW3)
             list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/libfftw3f-3${LIB_EXTENSION}")
@@ -99,7 +99,7 @@ function(copy_vst3_dependencies target_name)
         
         set(LIBS_AND_WEIGHTS
             "${ORT_DIR}/lib/${LIB_PREFIX}onnxruntime${LIB_EXTENSION}"
-            "${LIBSAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
+            "${SAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
         )
         if(ENABLE_FFTW3)
             list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/lib/${LIB_PREFIX}fftw3f${LIB_EXTENSION}")
@@ -114,10 +114,10 @@ function(copy_vst3_dependencies target_name)
         
         set(LIBS_AND_WEIGHTS
             "${ORT_DIR}/lib/${LIB_PREFIX}onnxruntime${LIB_EXTENSION}"
-            "${LIBSAMPLERATE_DIR}/lib/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
+            "${SAMPLERATE_DIR}/lib64/${LIB_PREFIX}samplerate${LIB_EXTENSION}"
         )
         if(ENABLE_FFTW3)
-            list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/lib/${LIB_PREFIX}fftw3f${LIB_EXTENSION}")
+            list(APPEND LIBS_AND_WEIGHTS "${FFTW3_DIR}/lib64/${LIB_PREFIX}fftw3f${LIB_EXTENSION}")
         endif()
     endif()
     
