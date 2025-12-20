@@ -11,6 +11,15 @@ enum TrackerList{
 	NUM_TRACKERS
 };
 
+inline std::string TrackerListToString(TrackerList t)
+{
+    switch (t)
+    {
+        case BTRACK:   return "BTrack";
+        case BEATNET:   return "BeatNet";
+    }
+}
+
 class Interface final: public Tracker{
 public:
 

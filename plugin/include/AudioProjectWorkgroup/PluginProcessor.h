@@ -3,6 +3,8 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include "AudioProjectWorkgroup/tempo/interface.h"
 
+#define DEFAULT_BEAT_TRACKER 0 // for BTRACK.
+
 //==============================================================================
 class AudioPluginAudioProcessor  : public juce::AudioProcessor
 {

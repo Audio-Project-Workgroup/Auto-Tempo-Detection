@@ -12,9 +12,12 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     juce::LookAndFeel::setDefaultLookAndFeel(&customLNF);
     addAndMakeVisible(&display);
     addAndMakeVisible(&resetBtn);
+
+    setupTrackeroptionComboBox();
+
     setSize (canvasWidth, canvasHeight);
 }
-
+    
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
 {
 }
@@ -46,6 +49,34 @@ void AudioPluginAudioProcessorEditor::resized()
     resetBtn.setBounds(display.getBounds().getCentreX() - (btnWidth / 2),
         display.getBounds().getCentreY() - (btnHeight / 2.0) + 3*dispHeight/4,
         (int)btnWidth, (int)btnHeight);
+
+    trackerOptionLabel.setBounds(10, 10, 100, 20);
+    trackerOption.setBounds(120, 10, 150, 20);
+}
+
+void AudioPluginAudioProcessorEditor::setupTrackeroptionComboBox()
+{
+
+    trackerOptionLabel.setText("Beat Tracker ", juce::dontSendNotification);
+
+    for (int i=0; i< NUM_TRACKERS; ++i)
+    {
+        trackerOption.addItem(
+            juce::String( TrackerListToString(TrackerList(i)) ), 
+            (int)TrackerList(i) + 1
+        );
+    }
+    
+    trackerOption.setSelectedId( int(DEFAULT_BEAT_TRACKER) + 1);
+    
+    addAndMakeVisible(trackerOptionLabel);
+    addAndMakeVisible(trackerOption);
+
+    trackerOption.onChange = [this]()
+    {
+        processorRef.tracker.switchTracker(TrackerList(trackerOption.getSelectedId()-1));
+    };
+
 }
 
 void AudioPluginAudioProcessorEditor::timerCallback()
