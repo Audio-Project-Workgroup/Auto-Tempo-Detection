@@ -25,6 +25,12 @@ private:
     CustomLookAndFeel customLNF;
     Display display;
     CustomButton resetBtn;
+
+    // The tracker option dropdown
+    juce::ComboBox trackerOption;
+    juce::Label trackerOptionLabel;
+    void setupTrackeroptionComboBox();
+
     void timerCallback() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)
