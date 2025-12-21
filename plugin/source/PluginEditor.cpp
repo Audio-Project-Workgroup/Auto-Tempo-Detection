@@ -15,11 +15,15 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 
     setupTrackeroptionComboBox();
 
+    addAndMakeVisible(&beatLed);
+    beatLed.setBounds(10, 50, 10, 10);
+
     setSize (canvasWidth, canvasHeight);
 }
     
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
 {
+    stopTimer();
 }
 
 //==============================================================================
@@ -96,12 +100,20 @@ void AudioPluginAudioProcessorEditor::timerCallback()
         // after doing this, change resetBtn back to false
         processorRef.tracker.setup(currentSampleRate, currentSamplesPerBlock);
         resetBtn.resetFlag = false;
-    }else{
+    }else if (processorRef.isHostPlaying()){
         // Get the current tempo
         int tempo = processorRef.currTempo.load();
 
         // Store the current tempo in a string
         display.tempo = juce::String::formatted("%d", tempo);
         display.repaint();
+
+        bool isBeat = processorRef.beatStatus.exchange(false);
+        if (isBeat)
+        {
+            DBG("tock");
+            beatLed.Blink();
+        }
     }
+
 }

@@ -19,7 +19,7 @@ bool BeatneTracker::operate(float** data, int inputChannels){
 	// // transform data to mono
 	for (int j = 0; j< bufferSize; ++j){
 
-		monoBuffer[j] = static_cast<double>(data[0][j]);
+		monoBuffer[j] = data[0][j];
 
 		for (int i=1; i<inputChannels; ++i){
 			monoBuffer[j] += data[i][j];
@@ -28,6 +28,7 @@ bool BeatneTracker::operate(float** data, int inputChannels){
 	}
 	if(myBeatNet.process(monoBuffer, predictions)){
 		compute_tempo();
+		return true;
 	}
 	return false;
 }

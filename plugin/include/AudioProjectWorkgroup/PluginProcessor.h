@@ -48,10 +48,13 @@ public:
     // Add variable to store current BPM information (to be accessed from UI and Audio Thread)
     std::atomic<double> currTempo;
     Interface tracker;
-    
+    std::atomic<bool> beatStatus;    
+
+    bool isHostPlaying() const;
 
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor);
     float *currBuffer[2];
+
 };

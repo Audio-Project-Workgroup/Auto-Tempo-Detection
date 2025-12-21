@@ -4,6 +4,7 @@
 #include "Display.h"
 #include "CustomButton.h"
 #include "CustomLookAndFeel.h"
+#include "BeatLedOut.h"
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor  : public juce::AudioProcessorEditor, juce::Timer
@@ -25,6 +26,7 @@ private:
     CustomLookAndFeel customLNF;
     Display display;
     CustomButton resetBtn;
+    BeatLed beatLed;
 
     // The tracker option dropdown
     juce::ComboBox trackerOption;

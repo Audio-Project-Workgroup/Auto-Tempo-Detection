@@ -39,6 +39,7 @@ target_sources(${PROJECT_NAME}
         source/tempo/beatNeTracker.cpp
         source/tempo/interface.cpp
         source/ButtonLookAndFeel.cpp
+        source/BeatLedOut.cpp
 )   
 
 target_include_directories(${PROJECT_NAME}
