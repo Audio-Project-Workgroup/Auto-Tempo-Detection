@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project (AutoTempoDetectionTests)
+project (CadenceTests)
 
 enable_testing()
 

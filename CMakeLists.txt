@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
 set(COMPANY_NAME AudioProjectWorkgroup)
-set(PROJECT_NAME Auto-Tempo-Detection)
+set(PROJECT_NAME Cadence)
 
 project(${PROJECT_NAME} VERSION 0.0.1)
 
