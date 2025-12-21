@@ -4,6 +4,8 @@
 #include "tracker.h"
 #include "BeatNet.h"
 
+#include <chrono>
+
 class BeatneTracker final: public Tracker{
 
 public:
@@ -24,7 +26,14 @@ private:
 
 	std::vector<float> monoBuffer, predictions;
 	float tempoEstimate;
-	void compute_tempo();
+	bool compute_tempo();
+	
+	double rollingAvgSmoothing(double);
+	int argmax();
+	std::chrono::steady_clock::time_point lastBeaTime;
+	// double candidates[4] {0.5, 1.0, 2.0, 4.0};
+	static const int MAX_RECENT_TEMPOS=10;
+	std::vector<double> rollingAvg{MAX_RECENT_TEMPOS};	// fifo
 };
 
 #endif

@@ -79,6 +79,7 @@ void AudioPluginAudioProcessorEditor::setupTrackeroptionComboBox()
     trackerOption.onChange = [this]()
     {
         processorRef.tracker.switchTracker(TrackerList(trackerOption.getSelectedId()-1));
+        processorRef.tracker.setup(processorRef.getSampleRate(),processorRef.getBlockSize());
     };
 
 }
