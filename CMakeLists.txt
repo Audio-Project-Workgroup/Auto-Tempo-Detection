@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.22)
 
 set(COMPANY_NAME AudioProjectWorkgroup)
-set(PROJECT_NAME Auto-Tempo-Detection)
+set(PROJECT_NAME Cadence)
 
 project(${PROJECT_NAME} VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 
@@ -23,8 +25,8 @@ if(NOT EXISTS ${JUCE_DIR}/CMakeLists.txt)
     CPMAddPackage(
         NAME JUCE
         GITHUB_REPOSITORY juce-framework/JUCE
-        GIT_TAG 8.0.6
-        VERSION 8.0.6
+        GIT_TAG 8.0.9
+        VERSION 8.0.9
         SOURCE_DIR ${LIB_DIR}/juce
     )
 else()
@@ -56,6 +58,12 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+set(ENABLE_KISSFFT OFF CACHE BOOL "Use KissFFT as an fft backend for building BeatNet")
+set(ENABLE_FFTW3 ON CACHE BOOL "Use FFTW3 as an fft backend for building BeatNet")
+# set(BUILD_BEATNET_APP ON CACHE BOOL "Build test application for BeatNet")
+add_subdirectory(${LIB_DIR}/BeatNet/onnx)
+add_subdirectory(${LIB_DIR}/BTrack)
+
 if(BUILD_APP)
     add_subdirectory(app)
 endif()
@@ -68,5 +76,3 @@ endif()
 if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
-
-add_subdirectory(${LIB_DIR}/BTrack)

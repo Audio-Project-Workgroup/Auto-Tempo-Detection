@@ -1,18 +1,49 @@
 
 #pragma once
 
-#include "tracker.h"
+#include "AudioProjectWorkgroup/tempo/beatrack.h"
+#include "AudioProjectWorkgroup/tempo/beatNeTracker.h"
+
 
 enum TrackerList{
 	BTRACK,
-	ONNXTRACK,
+	BEATNET,
 	NUM_TRACKERS
 };
 
-class Interface{
+inline std::string TrackerListToString(TrackerList t)
+{
+    switch (t)
+    {
+        case BTRACK:   return "BTrack";
+        case BEATNET:   return "BeatNet";
+    }
+}
+
+class Interface final: public Tracker{
 public:
-	Interface(TrackerList tracker=BTRACK); // default is the BTrack
-	Tracker& getTracker();
+
+	Interface(TrackerList tracker=BEATNET); // now default is the BeatNet
+	~Interface() override;
+	// delete copy and move to comply with the rule of 5
+	Interface(const Interface&) = delete;
+	Interface(Interface&&) = delete;
+	Interface& operator=(const Interface&) = delete;
+	Interface& operator=(Interface &&) = delete;
+
+	void setup(double sampleRate, int samplesPerBlock) override; // function to run in the prepareToPlay
+	bool operate(float** data, int inputChannels) override;	// function to run in the processBlock
+	double get_tempo() override;
+
+	void switchTracker(TrackerList);
+
 private:
-	Tracker* tempoTracker;
+
+	Tracker *tempoTracker;
+	TrackerList selectedTracker;
+	void assignTracker();
+
+	// available Trackers 
+	BeaTrack mbeatrack;
+	BeatneTracker mbeatnet;
 };

@@ -3,6 +3,8 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include "AudioProjectWorkgroup/tempo/interface.h"
 
+#define DEFAULT_BEAT_TRACKER 0 // for BTRACK.
+
 //==============================================================================
 class AudioPluginAudioProcessor  : public juce::AudioProcessor
 {
@@ -45,12 +47,14 @@ public:
     
     // Add variable to store current BPM information (to be accessed from UI and Audio Thread)
     std::atomic<double> currTempo;
-    Interface interface;
-    Tracker& tracker;
-    
+    Interface tracker;
+    std::atomic<bool> beatStatus;    
+
+    bool isHostPlaying() const;
 
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor);
     float *currBuffer[2];
+
 };

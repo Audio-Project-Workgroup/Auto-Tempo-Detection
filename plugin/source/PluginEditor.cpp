@@ -12,11 +12,18 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     juce::LookAndFeel::setDefaultLookAndFeel(&customLNF);
     addAndMakeVisible(&display);
     addAndMakeVisible(&resetBtn);
+
+    setupTrackeroptionComboBox();
+
+    addAndMakeVisible(&beatLed);
+    beatLed.setBounds(10, 50, 10, 10);
+
     setSize (canvasWidth, canvasHeight);
 }
-
+    
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
 {
+    stopTimer();
 }
 
 //==============================================================================
@@ -46,6 +53,35 @@ void AudioPluginAudioProcessorEditor::resized()
     resetBtn.setBounds(display.getBounds().getCentreX() - (btnWidth / 2),
         display.getBounds().getCentreY() - (btnHeight / 2.0) + 3*dispHeight/4,
         (int)btnWidth, (int)btnHeight);
+
+    trackerOptionLabel.setBounds(10, 10, 100, 20);
+    trackerOption.setBounds(120, 10, 150, 20);
+}
+
+void AudioPluginAudioProcessorEditor::setupTrackeroptionComboBox()
+{
+
+    trackerOptionLabel.setText("Beat Tracker ", juce::dontSendNotification);
+
+    for (int i=0; i< NUM_TRACKERS; ++i)
+    {
+        trackerOption.addItem(
+            juce::String( TrackerListToString(TrackerList(i)) ), 
+            (int)TrackerList(i) + 1
+        );
+    }
+    
+    trackerOption.setSelectedId( int(DEFAULT_BEAT_TRACKER) + 1);
+    
+    addAndMakeVisible(trackerOptionLabel);
+    addAndMakeVisible(trackerOption);
+
+    trackerOption.onChange = [this]()
+    {
+        processorRef.tracker.switchTracker(TrackerList(trackerOption.getSelectedId()-1));
+        processorRef.tracker.setup(processorRef.getSampleRate(),processorRef.getBlockSize());
+    };
+
 }
 
 void AudioPluginAudioProcessorEditor::timerCallback()
@@ -65,12 +101,20 @@ void AudioPluginAudioProcessorEditor::timerCallback()
         // after doing this, change resetBtn back to false
         processorRef.tracker.setup(currentSampleRate, currentSamplesPerBlock);
         resetBtn.resetFlag = false;
-    }else{
+    }else if (processorRef.isHostPlaying()){
         // Get the current tempo
         int tempo = processorRef.currTempo.load();
 
         // Store the current tempo in a string
         display.tempo = juce::String::formatted("%d", tempo);
         display.repaint();
+
+        bool isBeat = processorRef.beatStatus.exchange(false);
+        if (isBeat)
+        {
+            DBG("tock");
+            beatLed.Blink();
+        }
     }
+
 }

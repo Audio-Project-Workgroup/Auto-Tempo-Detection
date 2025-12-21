@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - main-dev
       
 jobs:
   build:
@@ -71,7 +72,7 @@ jobs:
             libs/BTrack/libs
           key: ${{ runner.os }}-build-${{ github.sha }}
 
-  test-auto-tempo-detection:
+  test-cadence:
     needs: build
     strategy:
       matrix:
@@ -92,16 +93,16 @@ jobs:
           key: ${{ runner.os }}-build-${{ github.sha }}
           fail-on-cache-miss: true
       
-      - name: Apply Auto-Tempo-Detection tests (Unix)
+      - name: Apply Cadence tests (Unix)
         if: runner.os != 'Windows'
-        run: ${PWD}/build/test/AutoTempoDetectionTests
+        run: ${PWD}/build/test/CadenceTests
       
-      - name: Run Auto-Tempo-Detection tests (Windows)
+      - name: Run Cadence tests (Windows)
         if: runner.os == 'Windows'
         shell: cmd
         run: |
           set PATH=%PATH%;%CD%\libs\BTrack\libs\libsamplerate-0.2.2-win64\bin
-          build\test\Debug\AutoTempoDetectionTests.exe
+          build\test\Debug\CadenceTests.exe
 
   test-btrack:
     needs: build
